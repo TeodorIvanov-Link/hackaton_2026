@@ -267,7 +267,7 @@ function generateRecord(): Record_ {
   };
 }
 
-const RECORD_COUNT = 1000;
+const RECORD_COUNT = 200;
 const records: Record_[] = Array.from({ length: RECORD_COUNT }, generateRecord);
 
 const outPath = join(__dirname, "..", "data", "historical-data.json");
