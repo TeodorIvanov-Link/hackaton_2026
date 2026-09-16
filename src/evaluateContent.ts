@@ -22,11 +22,7 @@ export async function evaluateContent(request: EvaluateRequest): Promise<Evaluat
     messages: [
       {
         role: "user",
-        content: JSON.stringify({
-          campaignType: request.campaignType,
-          audience: request.audience,
-          content: request.content,
-        }),
+        content: JSON.stringify(request),
       },
     ],
     output_config: {

@@ -1,6 +1,6 @@
 # SummerTeamBackend
 
-Evaluates SMS/WhatsApp campaign content against audience data using Claude.
+Predicts the expected success rate of an SMS/WhatsApp campaign, given its audience profile and content, calibrated against historical campaign data using Claude.
 
 ## Run it
 
@@ -44,20 +44,23 @@ Every request needs the `x-api-key` header (value = your `API_AUTH_TOKEN`). Requ
 ```
 POST /evaluate
 {
-  "campaignType": "sms" | "whatsapp",
-  "audience": { ... freeform audience/segment data ... },
+  "audience": "Loyal Customers",
+  "totalContacts": 12500,
+  "genderDistribution": { "male": 45, "female": 52, "other": 3 },
+  "ageDistribution": { "18-24": 8, "25-34": 26, "35-44": 27, "45-54": 20, "55-64": 13, "65+": 6 },
+  "interests": { "culture": 20, "sport": 35, "food": 40, "fashion": 30, "technology": 15, "travel": 25, "music": 20, "gaming": 10, "healthFitness": 22, "finance": 12 },
   "content": "the campaign text to evaluate"
 }
 ```
+
+`genderDistribution`, `ageDistribution`, and `interests` are optional (all are percentage maps). `audience`, `totalContacts`, and `content` are required.
 
 Response:
 
 ```json
 {
-  "relevanceScore": 82,
-  "verdict": "relevant",
-  "reasoning": "...",
-  "flags": []
+  "expectedSuccessRate": 6.1,
+  "reasoning": "..."
 }
 ```
 
@@ -67,7 +70,7 @@ Response:
 curl -X POST "http://localhost:3000/evaluate" \
   -H "Content-Type: application/json" \
   -H "x-api-key: YOUR_API_AUTH_TOKEN" \
-  -d '{"campaignType":"sms","audience":{"segment":"Existing customers"},"content":"Flash sale! 30% off today only."}'
+  -d '{"audience":"Loyal Customers","totalContacts":12500,"interests":{"fashion":30,"food":40},"content":"Enjoy 20% off our new collection."}'
 ```
 
 **PowerShell** (prefer `Invoke-RestMethod` - avoids native-argument quoting issues with `curl.exe` on Windows PowerShell):
@@ -75,9 +78,10 @@ curl -X POST "http://localhost:3000/evaluate" \
 ```powershell
 $headers = @{ "x-api-key" = "YOUR_API_AUTH_TOKEN" }
 $body = @{
-    campaignType = "sms"
-    audience = @{ segment = "Existing customers" }
-    content = "Flash sale! 30% off today only."
+    audience = "Loyal Customers"
+    totalContacts = 12500
+    interests = @{ fashion = 30; food = 40 }
+    content = "Enjoy 20% off our new collection."
 } | ConvertTo-Json
 
 Invoke-RestMethod -Uri "http://localhost:3000/evaluate" -Method Post -Headers $headers -ContentType "application/json" -Body $body
@@ -85,7 +89,7 @@ Invoke-RestMethod -Uri "http://localhost:3000/evaluate" -Method Post -Headers $h
 
 ## How it works
 
-- `data/historical-data.json` - historical campaign examples (replace with the real dataset). Embedded into the system prompt and cached (`cache_control: ephemeral`) since it's static across requests.
-- `src/systemPrompt.ts` - builds the system prompt that carries the historical data and scoring instructions.
+- `data/historical-data.json` - historical campaign examples with their actual `successRate` (currently one sample record; will be replaced with a larger synthetic-but-realistic dataset). Embedded into the system prompt and cached (`cache_control: ephemeral`) since it's static across requests.
+- `src/systemPrompt.ts` - builds the system prompt that carries the historical data and instructs Claude to predict `successRate` by analogy to the closest historical examples.
 - `src/evaluateContent.ts` - calls Claude with a structured output schema (`EvaluationResultSchema`) so the response is always valid JSON, no parsing needed.
 - `src/index.ts` - `POST /evaluate` endpoint, gated by the `x-api-key` header (constant-time comparison via `crypto.timingSafeEqual`).

@@ -1,18 +1,33 @@
 [
   {
-    "campaignType": "sms",
-    "audienceSegment": "Existing customers, 25-40, opted into promotional offers",
-    "content": "Hey! Your favorite items are 20% off today only. Shop now: link.example/sale",
-    "relevanceScore": 88,
-    "verdict": "relevant",
-    "notes": "Clear offer, matches segment interest, appropriate length for SMS"
-  },
-  {
-    "campaignType": "whatsapp",
-    "audienceSegment": "B2B leads who downloaded a product whitepaper",
-    "content": "Hi there! Do you like pizza? Check out our new topping combos.",
-    "relevanceScore": 5,
-    "verdict": "irrelevant",
-    "notes": "Completely unrelated to audience's known interest (B2B product research)"
+    "audience": "Loyal Customers",
+    "totalContacts": 12500,
+    "genderDistribution": {
+      "male": 45,
+      "female": 52,
+      "other": 3
+    },
+    "ageDistribution": {
+      "18-24": 8,
+      "25-34": 26,
+      "35-44": 27,
+      "45-54": 20,
+      "55-64": 13,
+      "65+": 6
+    },
+    "interests": {
+      "culture": 20,
+      "sport": 35,
+      "food": 40,
+      "fashion": 30,
+      "technology": 15,
+      "travel": 25,
+      "music": 20,
+      "gaming": 10,
+      "healthFitness": 22,
+      "finance": 12
+    },
+    "successRate": 6.1,
+    "content": "Your next favourite is here. Enjoy 20% off our new collection. Shop now."
   }
 ]
