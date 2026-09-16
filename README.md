@@ -53,14 +53,17 @@ POST /evaluate
 }
 ```
 
-`genderDistribution`, `ageDistribution`, and `interests` are optional (all are percentage maps). `audience`, `totalContacts`, and `content` are required.
+`audience` must be one of `"Loyal Customers"`, `"New subscribers"`, `"Custom campaign"`. `genderDistribution`, `ageDistribution`, and `interests` are optional (all are percentage maps). `audience`, `totalContacts`, and `content` are required.
 
 Response:
 
 ```json
 {
-  "expectedSuccessRate": 6.1,
-  "reasoning": "..."
+  "estimatedReach": 11875,
+  "engagement": 22.4,
+  "conversations": 763,
+  "optOuts": 38,
+  "cost": 375.0
 }
 ```
 
