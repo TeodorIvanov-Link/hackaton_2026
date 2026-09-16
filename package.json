@@ -1,7 +1,7 @@
 {
-  "name": "hackaton",
+  "name": "summer-team-backend",
   "version": "1.0.0",
-  "description": "Evaluates SMS/WhatsApp campaign content for relevance against audience data using Claude",
+  "description": "SummerTeamBackend - evaluates SMS/WhatsApp campaign content for relevance against audience data using Claude",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
