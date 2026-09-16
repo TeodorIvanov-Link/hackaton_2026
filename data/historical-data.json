@@ -1,0 +1,18 @@
+[
+  {
+    "campaignType": "sms",
+    "audienceSegment": "Existing customers, 25-40, opted into promotional offers",
+    "content": "Hey! Your favorite items are 20% off today only. Shop now: link.example/sale",
+    "relevanceScore": 88,
+    "verdict": "relevant",
+    "notes": "Clear offer, matches segment interest, appropriate length for SMS"
+  },
+  {
+    "campaignType": "whatsapp",
+    "audienceSegment": "B2B leads who downloaded a product whitepaper",
+    "content": "Hi there! Do you like pizza? Check out our new topping combos.",
+    "relevanceScore": 5,
+    "verdict": "irrelevant",
+    "notes": "Completely unrelated to audience's known interest (B2B product research)"
+  }
+]
